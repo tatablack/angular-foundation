@@ -113,8 +113,8 @@ angular.module('mm.foundation.modal', ['mm.foundation.transition'])
     };
   }])
 
-  .factory('$modalStack', ['$window', '$transition', '$timeout', '$document', '$compile', '$rootScope', '$$stackedMap',
-    function ($window, $transition, $timeout, $document, $compile, $rootScope, $$stackedMap) {
+  .factory('$modalStack', ['$window', '$animate', '$transition', '$timeout', '$document', '$compile', '$rootScope', '$$stackedMap',
+    function ($window, $animate, $transition, $timeout, $document, $compile, $rootScope, $$stackedMap) {
 
       var OPENED_MODAL_CLASS = 'modal-open';
 
@@ -174,7 +174,7 @@ angular.module('mm.foundation.modal', ['mm.foundation.transition'])
         var transitionEndEventName = $transition.transitionEndEventName;
         if (transitionEndEventName) {
           // transition out
-          var timeout = $timeout(afterAnimating, emulateTime);
+          var timeout = $timeout(afterAnimating, $animate.enabled() ? emulateTime : 0);
 
           domEl.bind(transitionEndEventName, function () {
             $timeout.cancel(timeout);
